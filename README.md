@@ -8,6 +8,7 @@ Text-based person search is a challenging task aimed at locating specific target
 
 ## Usage
 ### Setup
+Make sure [conda](https://www.anaconda.com/distribution/) is installed.
 ```
 conda create -n diverseperson python
 conda activate diverseperson
