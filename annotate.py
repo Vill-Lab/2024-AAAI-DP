@@ -2,24 +2,12 @@ import jsonlines
 import threading
 import random
 import json
+import argparse
 from tqdm import tqdm
 from datasets import load_dataset
 from annotator import GeneralGenerator
 
 api_keys = ""
-origin_task_list = [
-    {
-        'task_name': 'description_annotation',
-        'task_type': 'description_annotation',
-        'origin_path':r'',
-        'output_path':r'',
-        'model':'gpt-3.5-turbo',
-        'strategy':'general_generation',
-        'TEXT_START': 0,
-        'TEXT_END': -1,
-        'SLICE_STEP': 500,
-    }
-]
 
 
 def description_annotation_data_list(data_list):
@@ -58,7 +46,6 @@ def generate_instruction(task):
     return texts
 
 
-
 def generator(task):
     data_list = load_processed_jsonl(task['origin_path'])
     texts = description_annotation_data_list(data_list)
@@ -72,8 +59,7 @@ def generator(task):
     return results
 
 
-
-def main():
+def main(origin_task_list):
     exec_task_list = []
     for task in origin_task_list:
         texts = generate_instruction(task)[task['TEXT_START']:task['TEXT_END']]
@@ -117,7 +103,31 @@ def main():
 
         t = threading.Thread(target=generator, args=(task, ))
         t.start()
-    
+
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('--origin_path', type=str, help='Path to the original data')
+    parser.add_argument('--output_path', type=str, help='Path to save the generated data')
+    parser.add_argument('--model', type=str, default='gpt-3.5-turbo')
+    parser.add_argument('--TEXT_START', type=int, default=0)
+    parser.add_argument('--TEXT_END', type=int, default=-1)
+    parser.add_argument('--SLICE_STEP', type=int, default=500)
+    
+    args = parser.parse_args()
+    
+    origin_task_list = [
+    {
+        'task_name': 'description_annotation',
+        'task_type': 'description_annotation',
+        'origin_path': args.origin_path,
+        'output_path': args.output_path,
+        'model': args.model,
+        'strategy':'general_generation',
+        'TEXT_START': args.TEXT_START,
+        'TEXT_END': args.TEXT_END,
+        'SLICE_STEP': args.SLICE_STEP,
+    }
+]
+    
+    main(origin_task_list)
