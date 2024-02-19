@@ -47,6 +47,16 @@ Text-based person search is a challenging task aimed at locating specific target
     --attribute_localization_loss balanced_l1 \
     --resume_from_checkpoint latest \
 ```
+### Annotating
+```
+  python annotate.py \
+    --origin_path {DATA_PATH} \
+    --output_path {ANNOTATION_JSONL_PATH} \
+    --model "gpt-3.5-turbo" \
+    --TEXT_START 0 \
+    --TEXT_END -1 \
+    --SLICE_STEP 500 \
+```
 
 ## Reference
 Part of this code is based on related script of [diffusers](https://github.com/huggingface/diffusers).
