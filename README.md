@@ -47,7 +47,7 @@ Text-based person search is a challenging task aimed at locating specific target
     --attribute_localization_loss balanced_l1 \
     --resume_from_checkpoint latest \
 ```
-### Annotating
+### Annotation
 ```
   python annotate.py \
     --origin_path {DATA_PATH} \
