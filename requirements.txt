@@ -1,0 +1,14 @@
+torch
+torchvision
+torchaudio
+transformers==4.25.1
+accelerate
+datasets
+evaluate
+diffusers==0.16.1
+xformers 
+triton 
+scipy 
+clip 
+gradio 
+facenet-pytorch
